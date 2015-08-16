@@ -1,6 +1,6 @@
 
 package json.bind.hearthstone.domain;
 
-class GoblinsVsGnomes extends Card{
+public class GoblinsVsGnomes extends Card{
 
 }

@@ -1,6 +1,6 @@
 
 package json.bind.hearthstone.domain;
 
-class Promotion extends Card{
+public class Promotion extends Card{
 
 }

@@ -1,6 +1,6 @@
 
 package json.bind.hearthstone.domain;
 
-class Classic extends Card{
+public class Classic extends Card{
 
 }
