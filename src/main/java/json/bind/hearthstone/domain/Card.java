@@ -219,7 +219,10 @@ public class Card {
      */
     @JsonProperty("text")
     public String getText() {
-        return text.replaceAll("\\<.*?\\>", "").replaceAll("$", "");
+        if(null != text)
+            return text.replaceAll("\\<.*?\\>", "").replaceAll("$", "");
+        else
+            return text;
     }
 
     /**
