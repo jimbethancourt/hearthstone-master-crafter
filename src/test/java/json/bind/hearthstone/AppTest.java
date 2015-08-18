@@ -2,7 +2,6 @@ package json.bind.hearthstone;
 
 import java.io.IOException;
 import json.bind.hearthstone.domain.CardUniverse;
-import json.bind.hearthstone.domain.SystemCardSet;
 import org.junit.Assert;
 import org.junit.Test;
 

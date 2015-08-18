@@ -93,13 +93,29 @@ public class Card {
         if(null != durability)
             rawAttributeValues.put("durability", durability);
 
+        if(hasDivineShield())
+            rawAttributeValues.put("Divine Shield", 1);
 
+        if(hasTaunt())
+            rawAttributeValues.put("Taunt", 1);
 
+        if(hasCharge())
+            rawAttributeValues.put("Charge", 1);
 
         return rawAttributeValues;
     }
 
+    boolean hasDivineShield() {
+        return mechanics.contains("Divine Shield");
+    }
 
+    boolean hasTaunt() {
+        return mechanics.contains("Taunt");
+    }
+
+    boolean hasCharge() {
+        return mechanics.contains("Charge");
+    }
 
 
 

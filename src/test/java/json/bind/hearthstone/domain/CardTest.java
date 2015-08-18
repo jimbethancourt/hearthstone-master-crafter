@@ -59,4 +59,21 @@ public class CardTest {
         Assert.assertNull(tsc.getHealth());
     }
 
+    @Test
+    public void testDivineShieldMechanic() {
+         Card annoy_o_tron = allCards.get("Annoy-o-Tron");
+         Assert.assertTrue(annoy_o_tron.getMechanics().contains("Divine Shield"));
+    }
+
+    @Test
+    public void testTauntMechanic() {
+        Card annoy_o_tron = allCards.get("Annoy-o-Tron");
+        Assert.assertTrue(annoy_o_tron.getMechanics().contains("Taunt"));
+    }
+
+    @Test
+    public void testChargeMechanic() {
+        Card arcaneGolem = allCards.get("Arcane Golem");
+        Assert.assertTrue(arcaneGolem.getMechanics().contains("Charge"));
+    }
 }
