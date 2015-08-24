@@ -44,8 +44,8 @@ public class CardTest {
         Assert.assertEquals(croc.getCost().intValue(), 2);
         Assert.assertEquals(croc.getAttack().intValue(), 2);
         Assert.assertEquals(croc.getHealth().intValue(), 3);
-        Assert.assertNull(croc.getText());
-        Assert.assertNull(croc.getDurability());
+        Assert.assertTrue(croc.getText().isEmpty());
+        Assert.assertEquals(croc.getDurability().intValue(), 0);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class CardTest {
         Assert.assertEquals(tsc.getDurability().intValue(), 2);
         Assert.assertNotNull(tsc.getText());
         Assert.assertEquals("Whenever your hero attacks, restore 2 Health to it.", tsc.getText());
-        Assert.assertNull(tsc.getHealth());
+        Assert.assertEquals(tsc.getHealth().intValue(), 0);
     }
 
     @Test

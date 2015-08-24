@@ -45,7 +45,7 @@ public class Card {
     @JsonProperty("rarity")
     private String rarity;
     @JsonProperty("cost")
-    private Integer cost;
+    private Integer cost = 0;
     @JsonProperty("text")
     private String text;
     @JsonProperty("flavor")
@@ -53,13 +53,13 @@ public class Card {
     @JsonProperty("artist")
     private String artist;
     @JsonProperty("collectible")
-    private Boolean collectible;
+    private Boolean collectible = false;
     @JsonProperty("playerClass")
     private String playerClass;
     @JsonProperty("attack")
-    private Integer attack;
+    private Integer attack = 0;
     @JsonProperty("health")
-    private Integer health;
+    private Integer health = 0;
     @JsonProperty("race")
     private String race;
     @JsonProperty("mechanics")
@@ -68,21 +68,35 @@ public class Card {
     @JsonProperty("elite")
     private Boolean elite;
     @JsonProperty("durability")
-    private Integer durability;
+    private Integer durability = 0;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public double calculateValue(Map<String, Integer> calculatedAttributeValues){
-        return calculatedAttributeValues.get("attack") * attack +
+    private Double calculatedValue = 0.0;
+
+    public void calculateCardValue(Map<String, Double> calculatedAttributeValues){
+        calculatedValue = calculatedAttributeValues.get("attack") * attack +
                 calculatedAttributeValues.get("health") * health +
-                calculatedAttributeValues.get("durabiity") * durability;
+                //calculatedAttributeValues.get("durabiity") * durability +
+                calculatedAttributeValues.get("Charge") * attack * (hasCharge() ? 1 : 0) +
+                calculatedAttributeValues.get("Divine Shield") * (hasDivineShield() ? 1 : 0);
+    }
+
+    public Double getCalculatedValue() {
+        return calculatedValue;
+    }
+
+    /**
+     * Filters out heroes
+     */
+    public boolean isPlayableCard() {
+        return !getType().equals("Hero");
     }
 
     public Map<String, Integer> getRawAttributeValues() {
-        Map<String, Integer> rawAttributeValues = new TreeMap<>();
 
 
-        rawAttributeValues.put("cost", cost);
+        Map<String, Integer> rawAttributeValues = Attribute.getDefaultAttributeMap();
 
         if(null != attack)
             rawAttributeValues.put("attack", attack);
@@ -90,8 +104,10 @@ public class Card {
         if(null != health)
             rawAttributeValues.put("health", health);
 
-        if(null != durability)
+        /*if(null != durability) {
             rawAttributeValues.put("durability", durability);
+            rawAttributeValues.put("Charge", 1);
+        }*/
 
         if(hasDivineShield())
             rawAttributeValues.put("Divine Shield", 1);
@@ -117,7 +133,13 @@ public class Card {
         return mechanics.contains("Charge");
     }
 
+    public boolean isVariableSpellDamage() {
+        return text.contains("$");
+    }
 
+    public Double getCostAsDouble(){
+        return cost.doubleValue();
+    }
 
     /**
      * @return The card set name in human readable form
@@ -127,6 +149,10 @@ public class Card {
         String[] setName = simpleName.split("(?<=.)(?=\\p{Lu})");
         return Arrays.toString(setName).replaceAll(",","").replace("[","").replace("]","");
     }
+
+    /*
+     * JSON property setters
+     */
 
     /**
      *
@@ -228,10 +254,6 @@ public class Card {
         this.cost = cost;
     }
 
-    public boolean isVariableSpellDamage() {
-        return text.contains("$");
-    }
-
     /**
      *
      * @return
@@ -242,7 +264,7 @@ public class Card {
         if(null != text)
             return text.replaceAll("\\<.*?\\>", "").replaceAll("$", "");
         else
-            return text;
+            return "";  // return empty string instead of null
     }
 
     /**
