@@ -95,29 +95,27 @@ public class Card {
     }
 
     public Map<String, Integer> getRawAttributeValues() {
-        if(null != rawAttributeValues)
+        if (null != rawAttributeValues) // for testing and to prevent need for recalculating
             return rawAttributeValues;
 
         rawAttributeValues = Attribute.getDefaultAttributeMap();
 
-        if(null != attack)
-            rawAttributeValues.put("Attack", attack);
+        rawAttributeValues.put("Attack", attack);
 
-        if(null != health)
-            rawAttributeValues.put("Health", health);
+        rawAttributeValues.put("Health", health);
 
-        /*if(null != durability) {
-            rawAttributeValues.put("Durability", durability);
+        rawAttributeValues.put("Durability", durability);
+
+        if (!durability.equals(0))
             rawAttributeValues.put("Charge", 1);
-        }*/
 
-        if(hasDivineShield())
+        if (hasDivineShield())
             rawAttributeValues.put("Divine Shield", 1);
 
-        if(hasTaunt())
+        if (hasTaunt())
             rawAttributeValues.put("Taunt", 1);
 
-        if(hasCharge())
+        if (hasCharge())
             rawAttributeValues.put("Charge", 1);
 
         return rawAttributeValues;

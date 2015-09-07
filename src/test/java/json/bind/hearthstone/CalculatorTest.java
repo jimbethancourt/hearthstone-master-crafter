@@ -41,8 +41,18 @@ public class CalculatorTest {
         calculator = new Calculator();
     }
 
+    Card filterAttributes(List<String> attributes, Card card) {
+        Map<String, Integer> filteredAttrs =
+                card.getRawAttributeValues()
+                        .entrySet().stream()
+                        .filter(e -> attributes.contains(e.getKey()))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        card.setRawAttributeValues(new TreeMap<>(filteredAttrs));
+        return card;
+    }
+
     @Test
-    public void testCalculateRegressionParams() {
+    public void testCalculateRegressionParamsForChargeAndDivineShield() {
         List<String> filter = Arrays.asList("Attack", "Charge", "Divine Shield", "Health");
 
         Collection<Card> cards = new HashSet<>();
@@ -54,9 +64,8 @@ public class CalculatorTest {
         cards.add(filterAttributes(filter, allCards.get("Wisp")));
         cards.add(filterAttributes(filter, allCards.get("Silvermoon Guardian")));
         cards.add(filterAttributes(filter, allCards.get("River Crocolisk")));
-        //cards.add(allCards.get("Goldshire Footman"));
 
-        double [] handParams = calculateRegressionParamsByHand();
+        double [] handParams = calculateRegressionParamsByHandForChargeAndDivineShield();
         double [] params = calculator.calculateRegressionParameters(new ArrayList<>(cards));
 
         Assert.assertEquals(handParams[0], params[0], 0.001); //y intercepts the same
@@ -66,24 +75,12 @@ public class CalculatorTest {
         Assert.assertEquals(handParams[4], params[4], 0.001); //health the same
     }
 
-    Card filterAttributes(List<String> attributes, Card card) {
-        Map<String, Integer> filteredAttrs =
-                card.getRawAttributeValues()
-                        .entrySet().stream()
-                        .filter(e -> attributes.contains(e.getKey()))
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        card.setRawAttributeValues(new TreeMap<>(filteredAttrs));
-        return card;
-    }
-
-
-    double [] calculateRegressionParamsByHand () {
+    double [] calculateRegressionParamsByHandForChargeAndDivineShield() {
         OLSMultipleLinearRegression ols = new OLSMultipleLinearRegression();
 
         double [] manaCost = {4,6,6,3,1,0,4,2}; // mana cost is y intercept
         double [] [] x = new double[8][];
 
-        //atk,health,charge,divine
         //atk,charge,divine,health
         double [] korkonElite =         new double []{4,1,0,3};
         x[0] = korkonElite;
@@ -106,4 +103,53 @@ public class CalculatorTest {
 
         return ols.estimateRegressionParameters();
     }
+
+
+    @Test
+    public void testCalculateRegressionParamsForWeaponsAndMinions() {
+        List<String> filter = Arrays.asList("Attack", "Charge", "Durability", "Health");
+
+        Collection<Card> cards = new HashSet<>();
+        cards.add(filterAttributes(filter, allCards.get("Kor'kron Elite")));
+        cards.add(filterAttributes(filter, allCards.get("Reckless Rocketeer")));
+        cards.add(filterAttributes(filter, allCards.get("Wisp")));
+        cards.add(filterAttributes(filter, allCards.get("River Crocolisk")));
+        cards.add(filterAttributes(filter, allCards.get("Light's Justice")));
+        cards.add(filterAttributes(filter, allCards.get("Arcanite Reaper")));
+
+        double [] handParams = calculateRegressionParamsByHandForWeaponsAndMinions();
+        double [] params = calculator.calculateRegressionParameters(new ArrayList<>(cards));
+
+        Assert.assertEquals(handParams[0], params[0], 0.001); //y intercepts the same
+        Assert.assertEquals(handParams[1], params[1], 0.001); //attack the same
+        Assert.assertEquals(handParams[2], params[2], 0.001); //charge the same
+        Assert.assertEquals(handParams[3], params[3], 0.001); //durability the same
+        Assert.assertEquals(handParams[4], params[4], 0.001); //health the same
+    }
+
+    double [] calculateRegressionParamsByHandForWeaponsAndMinions() {
+        OLSMultipleLinearRegression ols = new OLSMultipleLinearRegression();
+
+        double [] manaCost = {4,6,0,2,1,5}; // mana cost is y intercept
+        double [] [] x = new double[6][];
+
+        //atk,charge,durability,health
+        double [] korkonElite =         new double []{4,1,0,3};
+        x[0] = korkonElite;
+        double [] recklessRocketeer =   new double []{5,1,0,2};
+        x[1] = recklessRocketeer;
+        double [] wisp =                new double []{1,0,0,1};
+        x[2] = wisp;
+        double [] riverCrocolisk =      new double []{2,0,0,3};
+        x[3] = riverCrocolisk;
+        double [] lightsJustice =      new double []{1,1,4,0};
+        x[4] = lightsJustice;
+        double [] arcaniteReaper =      new double []{5,1,2,0};
+        x[5] = arcaniteReaper;
+
+        ols.newSampleData(manaCost, x);
+
+        return ols.estimateRegressionParameters();
+    }
+
 }
