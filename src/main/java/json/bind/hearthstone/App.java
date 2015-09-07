@@ -24,7 +24,7 @@ public class App
                 .filter(Card::isPlayableCard).collect(Collectors.toList());
 
         Calculator calculator = new Calculator();
-        Map<String, Double> regressionValues = calculator.calculateAttributeValues(collectibleCards);
+        Map<Attribute, Double> regressionValues = calculator.calculateAttributeValues(collectibleCards);
 
         for (Card collectibleCard : collectibleCards) {
             collectibleCard.calculateCardValue(regressionValues);

@@ -14,6 +14,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import static json.bind.hearthstone.domain.Attribute.*;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
@@ -72,15 +74,15 @@ public class Card {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    Map<String, Integer> rawAttributeValues;
+    Map<Attribute, Integer> rawAttributeValues;
     private Double calculatedValue = 0.0;
 
-    public void calculateCardValue(Map<String, Double> calculatedAttributeValues){
-        calculatedValue = calculatedAttributeValues.get("attack") * attack +
-                calculatedAttributeValues.get("health") * health +
-                //calculatedAttributeValues.get("durabiity") * durability +
-                calculatedAttributeValues.get("Charge") * attack * (hasCharge() ? 1 : 0) +
-                calculatedAttributeValues.get("Divine Shield") * (hasDivineShield() ? 1 : 0);
+    public void calculateCardValue(Map<Attribute, Double> calculatedAttributeValues){
+        calculatedValue = calculatedAttributeValues.get(ATTACK) * attack +
+                calculatedAttributeValues.get(HEALTH) * health +
+                calculatedAttributeValues.get(DURABILITY) * durability +
+                calculatedAttributeValues.get(CHARGE) * attack * (hasCharge() ? 1 : 0) +
+                calculatedAttributeValues.get(DIVINE_SHIELD) * (hasDivineShield() ? 1 : 0);
     }
 
     public Double getCalculatedValue() {
@@ -94,34 +96,34 @@ public class Card {
         return !getType().equals("Hero");
     }
 
-    public Map<String, Integer> getRawAttributeValues() {
+    public Map<Attribute, Integer> getRawAttributeValues() {
         if (null != rawAttributeValues) // for testing and to prevent need for recalculating
             return rawAttributeValues;
 
         rawAttributeValues = Attribute.getDefaultAttributeMap();
 
-        rawAttributeValues.put("Attack", attack);
+        rawAttributeValues.put(ATTACK, attack);
 
-        rawAttributeValues.put("Health", health);
+        rawAttributeValues.put(HEALTH, health);
 
-        rawAttributeValues.put("Durability", durability);
+        rawAttributeValues.put(DURABILITY, durability);
 
         if (!durability.equals(0))
-            rawAttributeValues.put("Charge", 1);
+            rawAttributeValues.put(CHARGE, 1);
 
         if (hasDivineShield())
-            rawAttributeValues.put("Divine Shield", 1);
+            rawAttributeValues.put(DIVINE_SHIELD, 1);
 
         if (hasTaunt())
-            rawAttributeValues.put("Taunt", 1);
+            rawAttributeValues.put(TAUNT, 1);
 
         if (hasCharge())
-            rawAttributeValues.put("Charge", 1);
+            rawAttributeValues.put(CHARGE, 1);
 
         return rawAttributeValues;
     }
 
-    public void setRawAttributeValues(Map<String, Integer> rawAttributeValues) {
+    public void setRawAttributeValues(Map<Attribute, Integer> rawAttributeValues) {
         this.rawAttributeValues = rawAttributeValues;
     }
 

@@ -8,16 +8,18 @@ import java.util.TreeMap;
  */
 public enum Attribute {
 
-    DIVINE_SHIELD("Divine Shield", 0),
-    TAUNT("Taunt", 0),
-    CHARGE("Charge", 0);
+    //ALWAYS add new enums in alphabetical order to preserve natural comparator ordering for unit tests
+    ATTACK(0),
+    CHARGE(0),
+    DIVINE_SHIELD(0),
+    DURABILITY(0),
+    HEALTH(0),
+    TAUNT(0);
 
 
-    private final String name;
     private final Integer value;
 
-    Attribute(String name, Integer defaultValue) {
-        this.name = name;
+    Attribute(Integer defaultValue) {
         this.value = defaultValue;
     }
 
@@ -25,14 +27,10 @@ public enum Attribute {
         return value;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public static Map<String, Integer> getDefaultAttributeMap(){
-        Map<String, Integer> attributes = new TreeMap<>();
+    public static Map<Attribute, Integer> getDefaultAttributeMap(){
+        Map<Attribute, Integer> attributes = new TreeMap<>();
         for (Attribute attribute : Attribute.class.getEnumConstants()) {
-            attributes.put(attribute.getName(), attribute.getValue());
+            attributes.put(attribute, attribute.getValue());
         }
         return attributes;
     }

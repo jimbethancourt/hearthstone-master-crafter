@@ -6,12 +6,15 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import json.bind.hearthstone.domain.Attribute;
 import json.bind.hearthstone.domain.Card;
 import json.bind.hearthstone.domain.CardUniverse;
 import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import static json.bind.hearthstone.domain.Attribute.*;
 
 /**
  * Created by jimb on 8/22/2015.
@@ -41,8 +44,8 @@ public class CalculatorTest {
         calculator = new Calculator();
     }
 
-    Card filterAttributes(List<String> attributes, Card card) {
-        Map<String, Integer> filteredAttrs =
+    Card filterAttributes(List<Attribute> attributes, Card card) {
+        Map<Attribute, Integer> filteredAttrs =
                 card.getRawAttributeValues()
                         .entrySet().stream()
                         .filter(e -> attributes.contains(e.getKey()))
@@ -53,7 +56,7 @@ public class CalculatorTest {
 
     @Test
     public void testCalculateRegressionParamsForChargeAndDivineShield() {
-        List<String> filter = Arrays.asList("Attack", "Charge", "Divine Shield", "Health");
+        List<Attribute> filter = Arrays.asList(ATTACK, CHARGE, DIVINE_SHIELD, HEALTH);
 
         Collection<Card> cards = new HashSet<>();
         cards.add(filterAttributes(filter, allCards.get("Kor'kron Elite")));
@@ -107,7 +110,7 @@ public class CalculatorTest {
 
     @Test
     public void testCalculateRegressionParamsForWeaponsAndMinions() {
-        List<String> filter = Arrays.asList("Attack", "Charge", "Durability", "Health");
+        List<Attribute> filter = Arrays.asList(ATTACK, CHARGE, DURABILITY, HEALTH);
 
         Collection<Card> cards = new HashSet<>();
         cards.add(filterAttributes(filter, allCards.get("Kor'kron Elite")));

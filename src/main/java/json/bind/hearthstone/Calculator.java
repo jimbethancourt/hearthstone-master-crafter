@@ -1,6 +1,8 @@
 package json.bind.hearthstone;
 
 import java.util.*;
+
+import json.bind.hearthstone.domain.Attribute;
 import json.bind.hearthstone.domain.Card;
 import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
 
@@ -9,16 +11,16 @@ import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
  */
 public class Calculator {
 
-    public Map<String, Double> calculateAttributeValues(Collection<Card> cards) {
+    public Map<Attribute, Double> calculateAttributeValues(Collection<Card> cards) {
         double [] origRegressionParams = calculateRegressionParameters(new ArrayList<>(cards));
         double[] regressionParams = Arrays.copyOfRange(origRegressionParams, 1, origRegressionParams.length);
 
         Card card = cards.toArray(new Card[cards.size()])[0];
-        Set<String> paramNames = card.getRawAttributeValues().keySet();
+        Set<Attribute> paramNames = card.getRawAttributeValues().keySet();
 
-        Map<String, Double> attributeValues = new TreeMap<>();
+        Map<Attribute, Double> attributeValues = new TreeMap<>();
         int j = 0;
-        for (String paramName : paramNames) {
+        for (Attribute paramName : paramNames) {
             attributeValues.put(paramName, regressionParams[j++]);
         }
 
