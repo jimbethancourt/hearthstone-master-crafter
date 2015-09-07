@@ -72,6 +72,7 @@ public class Card {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
+    Map<String, Integer> rawAttributeValues;
     private Double calculatedValue = 0.0;
 
     public void calculateCardValue(Map<String, Double> calculatedAttributeValues){
@@ -94,18 +95,19 @@ public class Card {
     }
 
     public Map<String, Integer> getRawAttributeValues() {
+        if(null != rawAttributeValues)
+            return rawAttributeValues;
 
-
-        Map<String, Integer> rawAttributeValues = Attribute.getDefaultAttributeMap();
+        rawAttributeValues = Attribute.getDefaultAttributeMap();
 
         if(null != attack)
-            rawAttributeValues.put("attack", attack);
+            rawAttributeValues.put("Attack", attack);
 
         if(null != health)
-            rawAttributeValues.put("health", health);
+            rawAttributeValues.put("Health", health);
 
         /*if(null != durability) {
-            rawAttributeValues.put("durability", durability);
+            rawAttributeValues.put("Durability", durability);
             rawAttributeValues.put("Charge", 1);
         }*/
 
@@ -119,6 +121,10 @@ public class Card {
             rawAttributeValues.put("Charge", 1);
 
         return rawAttributeValues;
+    }
+
+    public void setRawAttributeValues(Map<String, Integer> rawAttributeValues) {
+        this.rawAttributeValues = rawAttributeValues;
     }
 
     boolean hasDivineShield() {
