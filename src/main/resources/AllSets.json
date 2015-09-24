@@ -3751,7 +3751,8 @@
       "howToGet": "Unlocked by defeating Lord Victor Nefarius in Blackwing Lair.",
       "howToGetGold": "Can be crafted after defeating Lord Victor Nefarius in Blackwing Lair.",
       "mechanics": [
-        "Battlecry"
+        "Battlecry",
+        "Overload"
       ]
     },
     {
@@ -4595,14 +4596,20 @@
       "name": "Rock Out",
       "type": "Spell",
       "cost": 3,
-      "text": "Summon 3 Firesworn. <b>Overload:</b> (2)"
+      "text": "Summon 3 Firesworn. <b>Overload:</b> (2)",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "BRMA04_4H",
       "name": "Rock Out",
       "type": "Spell",
       "cost": 3,
-      "text": "Summon 3 Firesworn. <b>Overload:</b> (2)"
+      "text": "Summon 3 Firesworn. <b>Overload:</b> (2)",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "BRM_001",
@@ -6281,6 +6288,7 @@
       "collectible": true,
       "playerClass": "Shaman",
       "mechanics": [
+        "Overload",
         "Windfury"
       ]
     },
@@ -6382,6 +6390,7 @@
       "collectible": true,
       "playerClass": "Shaman",
       "mechanics": [
+        "Overload",
         "Windfury"
       ]
     },
@@ -6414,6 +6423,7 @@
       "collectible": true,
       "playerClass": "Shaman",
       "mechanics": [
+        "Overload",
         "Taunt"
       ]
     },
@@ -6721,7 +6731,10 @@
       "flavor": "Spirit wolves are like regular wolves with pom-poms.",
       "artist": "Clint Langley",
       "collectible": true,
-      "playerClass": "Shaman"
+      "playerClass": "Shaman",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "EX1_finkle",
@@ -6813,7 +6826,10 @@
       "flavor": "If you combine it with Spooned Lightning and Knived Lightning, you have the full dining set.",
       "artist": "Ralph Horsley",
       "collectible": true,
-      "playerClass": "Shaman"
+      "playerClass": "Shaman",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "EX1_611",
@@ -7501,7 +7517,10 @@
       "flavor": "It's like an ocean of liquid magma in your mouth!",
       "artist": "Dan Scott",
       "collectible": true,
-      "playerClass": "Shaman"
+      "playerClass": "Shaman",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "EX1_354",
@@ -7584,7 +7603,10 @@
       "flavor": "Lightning Bolt! Lightning Bolt! Lightning Bolt!",
       "artist": "Daarken",
       "collectible": true,
-      "playerClass": "Shaman"
+      "playerClass": "Shaman",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "EX1_259",
@@ -7597,7 +7619,10 @@
       "flavor": "An umbrella won't be effective, I'm afraid.",
       "artist": "Christopher Moeller",
       "collectible": true,
-      "playerClass": "Shaman"
+      "playerClass": "Shaman",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "EX1_335",
@@ -9201,7 +9226,10 @@
       "flavor": "Yo, that's a nice axe.",
       "artist": "Nate Bowden",
       "collectible": true,
-      "playerClass": "Shaman"
+      "playerClass": "Shaman",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "EX1_028",
@@ -12914,7 +12942,10 @@
       "flavor": "Snap! This card! Pop!",
       "artist": "Warren Mahy",
       "collectible": true,
-      "playerClass": "Shaman"
+      "playerClass": "Shaman",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "GVG_052",
@@ -13051,6 +13082,7 @@
       "collectible": true,
       "playerClass": "Shaman",
       "mechanics": [
+        "Overload",
         "Windfury"
       ]
     },
@@ -13968,7 +14000,8 @@
       "elite": true,
       "playerClass": "Shaman",
       "mechanics": [
-        "Battlecry"
+        "Battlecry",
+        "Overload"
       ]
     },
     {
@@ -14433,7 +14466,10 @@
       "artist": "Clint Langley",
       "collectible": true,
       "race": "Murloc",
-      "playerClass": "Shaman"
+      "playerClass": "Shaman",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "GVG_114",
@@ -15967,7 +16003,10 @@
       "flavor": "MOMMMMMYYYYYYYYY!!!",
       "artist": "Zoltan & Gabor",
       "collectible": true,
-      "playerClass": "Shaman"
+      "playerClass": "Shaman",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "AT_036",
@@ -16706,7 +16745,10 @@
       "flavor": "I'm not a shaman or anything, but isn't Elemental Destruction the opposite of what they want to do?",
       "artist": "Tyler Walpole",
       "collectible": true,
-      "playerClass": "Shaman"
+      "playerClass": "Shaman",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "AT_045e",
@@ -18206,7 +18248,10 @@
       "artist": "Steve Prescott",
       "collectible": true,
       "race": "Totem",
-      "playerClass": "Shaman"
+      "playerClass": "Shaman",
+      "mechanics": [
+        "Overload"
+      ]
     },
     {
       "id": "AT_132_SHAMAN",
