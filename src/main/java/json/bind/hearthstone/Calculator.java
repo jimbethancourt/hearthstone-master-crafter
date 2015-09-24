@@ -31,17 +31,14 @@ public class Calculator {
         double[] manaCost = cards.stream().mapToDouble(Card :: getCostAsDouble).toArray();
         double[][] inputParams = new double[cards.size()][];
 
+        //cards.stream().map(card -> card.getRawAttributeValues().values().stream())
         for (int i = 0; i < cards.size(); i++) {
-            Collection<Integer> attributes = cards.get(i).getRawAttributeValues().values();
-            double [] cardAttributes = attributes.stream().mapToDouble(Integer::doubleValue).toArray();
-            inputParams [i] = cardAttributes;
+            inputParams [i] = cards.get(i).getRawAttributeValues().values().stream().mapToDouble(Integer::doubleValue).toArray();
         }
 
         OLSMultipleLinearRegression ols = new OLSMultipleLinearRegression();
         ols.newSampleData(manaCost, inputParams);
 
         return ols.estimateRegressionParameters();
-
     }
-
 }

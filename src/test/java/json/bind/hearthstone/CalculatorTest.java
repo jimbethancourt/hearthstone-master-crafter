@@ -35,6 +35,7 @@ public class CalculatorTest {
         List<Card> allCardsList = new ArrayList<>();
         allCardsList.addAll(cardUniverse.getBasic());
         allCardsList.addAll(cardUniverse.getClassic());
+        allCardsList.addAll(cardUniverse.getGoblinsVsGnomes());
 
         allCards = new HashMap<>();
         for (Card card : allCardsList) {
@@ -155,4 +156,48 @@ public class CalculatorTest {
         return ols.estimateRegressionParameters();
     }
 
+    @Test
+    public void testCalculateRegressionParamsForStealthAndPoison() {
+        List<Attribute> filter = Arrays.asList(ATTACK, HEALTH, POISONOUS, STEALTH);
+
+        Collection<Card> cards = new HashSet<>();
+        cards.add(filterAttributes(filter, allCards.get("Gilblin Stalker")));
+        cards.add(filterAttributes(filter, allCards.get("Stranglethorn Tiger")));
+        cards.add(filterAttributes(filter, allCards.get("Jungle Panther")));
+        cards.add(filterAttributes(filter, allCards.get("Patient Assassin")));
+        cards.add(filterAttributes(filter, allCards.get("Emperor Cobra")));
+
+
+        double [] handParams = calculateRegressionParamsByHandForStealthAndPoison();
+        double [] params = calculator.calculateRegressionParameters(new ArrayList<>(cards));
+
+        Assert.assertEquals(handParams[0], params[0], 0.001); //y intercepts the same
+        Assert.assertEquals(handParams[1], params[1], 0.001); //attack the same
+        Assert.assertEquals(handParams[2], params[2], 0.001); //health the same
+        Assert.assertEquals(handParams[3], params[3], 0.001); //poison the same
+        Assert.assertEquals(handParams[4], params[4], 0.001); //stealth the same
+    }
+
+    double [] calculateRegressionParamsByHandForStealthAndPoison() {
+        OLSMultipleLinearRegression ols = new OLSMultipleLinearRegression();
+
+        double [] manaCost = {2,5,3,2,3}; // mana cost is y intercept
+        double [] [] x = new double[5][];
+
+        //atk, health, poison, stealth
+        double [] gilblinStalker =      new double []{2,3,0,1};
+        x[0] = gilblinStalker;
+        double [] stranglethornTiger =  new double []{5,5,0,1};
+        x[1] = stranglethornTiger;
+        double [] junglePanther =       new double []{4,2,0,1};
+        x[2] = junglePanther;
+        double [] patientAssassin =     new double []{1,1,1,1};
+        x[3] = patientAssassin;
+        double [] emperorCobra =        new double []{2,3,1,0};
+        x[4] = emperorCobra;
+
+        ols.newSampleData(manaCost, x);
+
+        return ols.estimateRegressionParameters();
+    }
 }

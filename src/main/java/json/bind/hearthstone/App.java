@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.System;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,8 +21,10 @@ public class App
         App app = new App();
 
         List<Card> collectibleCards = app.getAllCards().stream()
-                .filter(card -> null != card).filter(Card::getCollectible)
-                .filter(Card::isPlayableCard).collect(Collectors.toList());
+                .filter(card -> null != card)
+                .filter(Card::getCollectible)
+                .filter(Card::isPlayableCard)
+                .collect(Collectors.toList());
 
         Calculator calculator = new Calculator();
         Map<Attribute, Double> regressionValues = calculator.calculateAttributeValues(collectibleCards);
@@ -31,6 +34,13 @@ public class App
         }
 
         //TODO: print out cards ordered by value delta via comparator
+
+        Collections.sort(collectibleCards, (c1, c2) -> c1.calculateDelta().compareTo(c2.calculateDelta()));
+
+        for (Card card : collectibleCards) {
+            System.out.println(card.getName() + " " + card.getCalculatedValue() + "  " + card.getCost());
+        }
+
     }
 
     public List<Card> getAllCards(){
@@ -55,10 +65,6 @@ public class App
         InputStream stream = getClass().getClassLoader().getResourceAsStream("AllSets.json");
 
         ObjectMapper mapper = new ObjectMapper();
-        CardUniverse cardUniverse = mapper.readValue(stream, CardUniverse.class);
-
-        //mapper.writeValue(System.out, cardUniverse);
-
-        return cardUniverse;
+        return mapper.readValue(stream, CardUniverse.class);
     }
 }

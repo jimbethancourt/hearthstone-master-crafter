@@ -79,10 +79,18 @@ public class Card {
 
     public void calculateCardValue(Map<Attribute, Double> calculatedAttributeValues){
         calculatedValue = calculatedAttributeValues.get(ATTACK) * attack +
-                calculatedAttributeValues.get(HEALTH) * health +
-                calculatedAttributeValues.get(DURABILITY) * durability +
                 calculatedAttributeValues.get(CHARGE) * attack * (hasCharge() ? 1 : 0) +
-                calculatedAttributeValues.get(DIVINE_SHIELD) * (hasDivineShield() ? 1 : 0);
+                calculatedAttributeValues.get(DIVINE_SHIELD) * (hasDivineShield() ? 1 : 0) +
+                calculatedAttributeValues.get(DURABILITY) * durability +
+                calculatedAttributeValues.get(HEALTH) * health +
+                calculatedAttributeValues.get(POISONOUS) * (isPoisonous() ? 1 : 0) +
+                calculatedAttributeValues.get(STEALTH) * (hasStealth() ? 1 : 0) +
+                calculatedAttributeValues.get(TAUNT)* (hasTaunt() ? 1 : 0)
+                ;
+    }
+
+    public Double calculateDelta() {
+        return cost - calculatedValue;
     }
 
     public Double getCalculatedValue() {
@@ -120,6 +128,12 @@ public class Card {
         if (hasCharge())
             rawAttributeValues.put(CHARGE, 1);
 
+        if(hasStealth())
+            rawAttributeValues.put(STEALTH, 1);
+
+        if(isPoisonous())
+            rawAttributeValues.put(POISONOUS, 1);
+
         return rawAttributeValues;
     }
 
@@ -128,15 +142,23 @@ public class Card {
     }
 
     boolean hasDivineShield() {
-        return mechanics.contains("Divine Shield");
+        return mechanics.contains(DIVINE_SHIELD.toString());
     }
 
     boolean hasTaunt() {
-        return mechanics.contains("Taunt");
+        return mechanics.contains(TAUNT.toString());
     }
 
     boolean hasCharge() {
-        return mechanics.contains("Charge");
+        return mechanics.contains(CHARGE.toString());
+    }
+
+    boolean hasStealth() {
+        return mechanics.contains(STEALTH.toString());
+    }
+
+    boolean isPoisonous() {
+        return mechanics.contains(POISONOUS.toString());
     }
 
     public boolean isVariableSpellDamage() {

@@ -1,7 +1,9 @@
 package json.bind.hearthstone.domain;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * Created by jimb on 8/23/2015.
@@ -14,7 +16,10 @@ public enum Attribute {
     DIVINE_SHIELD(0),
     DURABILITY(0),
     HEALTH(0),
-    TAUNT(0);
+    POISONOUS(0),
+    STEALTH(0),
+    TAUNT(0)
+    ;
 
 
     private final Integer value;
@@ -33,5 +38,15 @@ public enum Attribute {
             attributes.put(attribute, attribute.getValue());
         }
         return attributes;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.asList(this.name().split("_")).stream().map(this::capitalize).collect(Collectors.joining(" "));
+    }
+
+    private String capitalize(final String word) {
+        String wordToLower = word.toLowerCase();
+        return Character.toUpperCase(wordToLower.charAt(0)) + wordToLower.substring(1);
     }
 }
